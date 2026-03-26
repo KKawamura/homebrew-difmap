@@ -15,7 +15,7 @@ brew tap kazuakiyama/pgplot
 brew install pgplot
 
 # install DIFMAP
-brew tap kenzokawamura/difmap
+brew tap KKawamura/difmap
 brew install difmap
 ```
 
