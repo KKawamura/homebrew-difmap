@@ -27,6 +27,8 @@ class Difmap < Formula
     # C Compiler
     ENV.append "CC", "#{:gcc}"
     ENV.append "CCOMPL", "#{:gcc}"
+    ENV.append "CFLAGS", "-std=gnu89"
+    ENV.append "CPPFLAGS", "-std=gnu89"
     
     # Compiler settings for PGPLOT
     pgplotlib = "-L#{HOMEBREW_PREFIX}/lib -lpgplot -lX11 -lpng"
@@ -41,8 +43,21 @@ class Difmap < Formula
       s.change_make_var! "PGPLOT_LIB", pgplotlib
     end
 
+    inreplace "sphere_src/sphere.h", "#define sphere_h", "#define sphere_h\n#include <stdio.h>"
+    inreplace "pager_src/pager.h", "#define pager_h", "#define pager_h\n#include <stdio.h>"
+    cp "#{Formula["pgplot"].opt_prefix}/include/cpgplot.h", "include/cpgplot.h"
+    cp "#{Formula["pgplot"].opt_prefix}/lib/libcpgplot.a", "lib/libcpgplot.a"
+    cp "#{Formula["pgplot"].opt_prefix}/lib/libpgplot.a", "lib/libpgplot.a"
+
     if MacOS.version >= :ventura
       inreplace "configure", "(cd libtecla_src; ./configure --without-man-pages)", "(cd libtecla_src; ./configure --without-man-pages CFLAGS='-mmacosx-version-min=12.4.0 -Wno-error=incompatible-pointer-types')"
+    end
+
+    inreplace "sphere_src/func.c" do |s|
+      s.gsub!("static char true = 1;", "static char difmap_true = 1;")
+      s.gsub!("static char false = 0;", "static char difmap_false = 0;")
+      s.gsub!("&true", "&difmap_true")
+      s.gsub!("&false", "&difmap_false")
     end
 
     on_intel do
