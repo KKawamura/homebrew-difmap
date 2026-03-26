@@ -7,13 +7,15 @@ homebrew recently removed pgplot for a Licence issue.
 I made [a back up (+ minor modificaiton) of the latest pgplot formula just before being removed](https://github.com/kazuakiyama/homebrew-pgplot).
 You just need to tap this repository and install difmap.
 
+Note: `difmap.rb` has been updated to address [build issues](https://github.com/kazuakiyama/homebrew-difmap/issues/7) on newer macOS toolchains, including Apple Silicon environments.
+
 ```bash
 # install PGPLOT
 brew tap kazuakiyama/pgplot
 brew install pgplot
 
 # install DIFMAP
-brew tap kazuakiyama/difmap
+brew tap kenzokawamura/difmap
 brew install difmap
 ```
 
