@@ -19,6 +19,11 @@ brew tap KKawamura/difmap
 brew install difmap
 ```
 
+If you encounter tap duplication error, just use
+```
+brew install kkawamura/difmap/difmap
+```
+
 Don't forget to add paths for PGPLOT before using DIFMAP.
 For instance, you can add the following line to your ~/.bashrc_profile or ~/.zprofile files (and remember to source the file to update your current session):
 
